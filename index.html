@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="js/mappa.js"></script>
+<script type="text/javascript" src="js/movimento.js"></script>
+</head>
+<body onkeydown="checkKeyDown(event);" onkeypress="checkKeyPress(event)" >
+
+<h1 >Nigga run</h1>
+<img id="c0_0" src="img1/0.jpg">
+<img id="c0_1" src="img1/0.jpg">
+<img id="c0_2" src="img1/0.jpg">
+<img id="c0_3" src="img1/0.jpg">
+<img id="c0_4" src="img1/0.jpg">
+<img id="c0_5" src="img1/0.jpg">
+<img id="c0_6" src="img1/0.jpg">
+
+<br>
+<img id="c1_0" src="img1/0.jpg">
+<img id="c1_1" src="img1/0.jpg">
+<img id="c1_2" src="img1/0.jpg">
+<img id="c1_3" src="img1/0.jpg">
+<img id="c1_4" src="img1/0.jpg">
+<img id="c1_5" src="img1/0.jpg">
+<img id="c1_6" src="img1/0.jpg">
+
+<br>
+<img id="c2_0" src="img1/0.jpg">
+<img id="c2_1" src="img1/0.jpg">
+<img id="c2_2" src="img1/0.jpg">
+<img id="c2_3" src="img1/0.jpg">
+<img id="c2_4" src="img1/0.jpg">
+<img id="c2_5" src="img1/0.jpg">
+<img id="c2_6" src="img1/0.jpg">
+
+<br>
+<img id="c3_0" src="img1/0.jpg">
+<img id="c3_1" src="img1/0.jpg">
+<img id="c3_2" src="img1/0.jpg">
+<img id="c3_3" src="img1/0.jpg">
+<img id="c3_4" src="img1/0.jpg">
+<img id="c3_5" src="img1/0.jpg">
+<img id="c3_6" src="img1/0.jpg">
+
+<br>
+<img id="c4_0" src="img1/0.jpg">
+<img id="c4_1" src="img1/0.jpg">
+<img id="c4_2" src="img1/0.jpg">
+<img id="c4_3" src="img1/0.jpg">
+<img id="c4_4" src="img1/0.jpg">
+<img id="c4_5" src="img1/0.jpg">
+<img id="c4_6" src="img1/0.jpg">
+
+<br>
+<img id="c5_0" src="img1/0.jpg">
+<img id="c5_1" src="img1/0.jpg">
+<img id="c5_2" src="img1/0.jpg">
+<img id="c5_3" src="img1/0.jpg">
+<img id="c5_4" src="img1/0.jpg">
+<img id="c5_5" src="img1/0.jpg">
+<img id="c5_6" src="img1/0.jpg">
+
+<br>
+<img id="c6_0" src="img1/0.jpg">
+<img id="c6_1" src="img1/0.jpg">
+<img id="c6_2" src="img1/0.jpg">
+<img id="c6_3" src="img1/0.jpg">
+<img id="c6_4" src="img1/0.jpg">
+<img id="c6_5" src="img1/0.jpg">
+<img id="c6_6" src="img1/0.jpg">
+
+<br>
+<img id="c7_0" src="img1/0.jpg">
+<img id="c7_1" src="img1/0.jpg">
+<img id="c7_2" src="img1/0.jpg">
+<img id="c7_3" src="img1/0.jpg">
+<img id="c7_4" src="img1/0.jpg">
+<img id="c7_5" src="img1/0.jpg">
+<img id="c7_6" src="img1/0.jpg">
+
+<br>
+<img id="c8_0" src="img1/0.jpg">
+<img id="c8_1" src="img1/0.jpg">
+<img id="c8_2" src="img1/0.jpg">
+<img id="c8_3" src="img1/0.jpg">
+<img id="c8_4" src="img1/0.jpg">
+<img id="c8_5" src="img1/0.jpg">
+<img id="c8_6" src="img1/0.jpg">
+
+<br>
+<img id="c9_0" src="img1/0.jpg">
+<img id="c9_1" src="img1/0.jpg">
+<img id="c9_2" src="img1/0.jpg">
+<img id="c9_3" src="img1/0.jpg">
+<img id="c9_4" src="img1/0.jpg">
+<img id="c9_5" src="img1/0.jpg">
+<img id="c9_6" src="img1/0.jpg">
+
+<br>
+
+
+<input type="button" onClick="generaPillole()"      value="genera pillole" ></input>
+<input type="button" onClick="generaOstacolo()"     value="genera ostacolo" ></input>
+<input type="button" onClick="disegnaPiano()"       value="disegna piano" ></input>
+<input type="button" onClick="mostraMatriceHTML()"  value="mostra matrice" ></input>
+<input type="button" onClick="disegnaOmino()"       value="mostra omino" ></input>
+
+<p id="posizioneOmino"></p>
+<p id="messaggioDebug"></p>
+</body>
+</html>
