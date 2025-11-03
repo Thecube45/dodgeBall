@@ -4,12 +4,11 @@ function checkKeyDown(e) {
     e = e || window.event;
     switch(e.keyCode){
 	case 39: destra(); break;
-	case 40: giu();    break;
+	
 	case 37: sinistra();   break;
-	case 38: su();    break;
+	
     }    
-    //alert ("The Unicode character code is: " + e.keyCode);   
-}
+}   
 
 // gestione dell'evento onkey press:
 function checkKeyPress (event){
@@ -17,31 +16,17 @@ function checkKeyPress (event){
     
 	switch(chCode){
     	case 100: destra();   break;
-    	case 115: giu();      break;
+    	
     	case 97:  sinistra(); break;
-    	case 119: su();       break;
+    	
     }
-    //alert ("The Unicode character code is: " + chCode);   
+     
 }
 
 
 function controllaCella(x,y){
 	switch (piano[x][y]){
-		case ARMA:
-			omino = ominoConSpada;
-			piano[x][y] = SFONDO; 
-			return true; 	
-		case OSTACOLO: 
-			return false;
-		case PILLOLA:
-			energia = energia + DELTA_ENERGIA;
-			document.getElementById("energia").innerHTML=energia;
-			piano[x][y] = SFONDO;
-			countPillole--;
-			if (countPillole==0){
-				document.getElementById("energia").innerHTML="<img src=\"coppa.jpg\" >";
-			}
-			return true;
+
 		default: 
 	      return true; 
 	}
@@ -62,22 +47,21 @@ function sposta (daX,daY, aX,aY){
 	}
 }
 
-function su(){
-	var newX = (ominoX -1 + R)%R; 
-	sposta (ominoX,ominoY, newX,ominoY);
-}
+
 
 function sinistra(){
-	var newY = (ominoY -1 + C)%C; 
+	if(ominoY>0){
+	var newY = (ominoY-1); 
 	sposta (ominoX,ominoY, ominoX,newY);
 }
-
-function giu(){
-	var newX = (ominoX + 1 + R)%R; 
-	sposta (ominoX,ominoY, newX,ominoY);
+	
 }
+
+
 
 function destra(){
-	var newY = (ominoY + 1 + C)%C; 
+	if(ominoY<6){
+	var newY = (ominoY + 1); 
 	sposta (ominoX,ominoY, ominoX,newY);
+	}
 }

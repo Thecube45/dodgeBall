@@ -1,34 +1,30 @@
 // posizione iniziale dell'omino
-var ominoX = 0; 
-var ominoY = 0;
+var ominoX = 9; 
+var ominoY = 3;
 
-// posizione dell'arma
-var armaX = 9; 
-var armaY = 9;
 
-// valore iniziale dell'energia
-var energia =0;
+
 
 // costanti e parametri per la configurazioen del gioco
-var PILLOLA = 1;
-var DELTA_ENERGIA = 20;
-var OSTACOLO=3; 
+
+
+
 var SFONDO = 0;
-var ARMA=2;
+
 
 var omino = "omino";
-var ominoConSpada = "ominoConSpada";
+
 
 var pathImg = "img1/";
 
 // dichiarazione variabili di lavoro
 var i=0;
 var j=0;
-var countPillole = 0;
+
 
 // numero di righe e numero di colonne
 var R = 10; 
-var C = 20; 
+var C = 7; 
 
 // definizione id matrice, come array di array
 var piano = new Array();
@@ -40,9 +36,7 @@ for (var i=0; i<R; i++) {
 	}
 }
 
-// posizionamento di un ostacolo per esempio
-piano[4][4] = OSTACOLO;
-piano[armaX][armaY] = ARMA;
+
 
 function mostraMatriceHTML(){
 	var s = "";
@@ -65,17 +59,10 @@ function disegnaPiano(){
 	// disegna l'omino in una data posizione
 	disegnaCellaSpeciale(ominoX,ominoY,omino); 
 	// disegna l'arma in una data posizione
-	disegnaCellaSpeciale(armaX,armaY,ARMA);
+	
 } 
 
-function generaPillole(){
-    countPillole ++; //vanno raccolti tutti, meglio contarli
-	generaOggetto(PILLOLA);
-}
 
-function generaOstacolo(){
-	generaOggetto(OSTACOLO);
-}
 
 function generaOggetto(valOggetto){
 	// si genera un indice di riga casuale tra 0 e R
