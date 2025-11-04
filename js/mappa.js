@@ -29,7 +29,7 @@ var j=0;
 
 // numero di righe e numero di colonne
 var R = 10; 
-var C = 7; 
+var C = 9; 
 
 // definizione id matrice, come array di array
 var piano = new Array();
@@ -104,17 +104,3 @@ function disegnaOmino() {
 } 
 
 
-
-
-// per fermare il movimento:
-clearInterval(intervalloMovimento); // questo lo puoi chiamare dentro 
-
-fineGioco();
-
-// esempio di invocazione
-function 
-
-fineGioco  () {
-    clearInterval(intervalloMovimento);
-    
-}
