@@ -50,7 +50,7 @@ function sposta (daX,daY, aX,aY){
 
 
 function sinistra(){
-	if(ominoY>0){
+	if(ominoY>1){
 	var newY = (ominoY-1); 
 	sposta (ominoX,ominoY, ominoX,newY);
 }
@@ -60,7 +60,7 @@ function sinistra(){
 
 
 function destra(){
-	if(ominoY<6){
+	if(ominoY<7){
 	var newY = (ominoY + 1); 
 	sposta (ominoX,ominoY, ominoX,newY);
 	}
