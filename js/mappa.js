@@ -10,8 +10,13 @@ var ominoY = 3;
 
 
 var SFONDO = 0;
+/*
+// Creazione dell'istanza del nemico
+var cacciatore = new Nemico(5, 5, "cacciatore"); // x, y, nome immagine
 
-
+// Muove il nemico ogni 500 ms (1/2 secondo)
+const intervalloMovimento = setInterval("cacciatore.muovi()" , 500);
+*/
 var omino = "omino";
 
 
@@ -99,3 +104,17 @@ function disegnaOmino() {
 } 
 
 
+
+
+// per fermare il movimento:
+clearInterval(intervalloMovimento); // questo lo puoi chiamare dentro 
+
+fineGioco();
+
+// esempio di invocazione
+function 
+
+fineGioco  () {
+    clearInterval(intervalloMovimento);
+    
+}
