@@ -1,26 +1,19 @@
-
 <!DOCTYPE html>
 <html>
 <head>
+<!-- carica prima il cacciatore, poi la mappa e poi movimento -->
+<script type="text/javascript" src="js/cacciatore.js"></script>
 <script type="text/javascript" src="js/mappa.js"></script>
 <script type="text/javascript" src="js/movimento.js"></script>
 </head>
 <body onkeydown="checkKeyDown(event);" onkeypress="checkKeyPress(event)" >
 
-
 <style>
-
-    img {
-        width: 55px;
-        height: 55px;
-    }
-
-    div {
-        text-align:center;
-    }
+    img { width: 55px; height: 55px; }
+    div { text-align:center; }
 </style>
 <div>
-<h1 >Nigga run</h1>
+<h1>Run</h1>
 <img id="c0_0" src="img1/0.jpg">
 <img id="c0_1" src="img1/0.jpg">
 <img id="c0_2" src="img1/0.jpg">
@@ -140,6 +133,12 @@
 
 <p id="posizioneOmino"></p>
 <p id="messaggioDebug"></p>
+
+<!-- contatori / punteggio -->
+<p id="scoreCounter">Punti: 0</p>
+<p id="cacciatiCounter">Cacciati: 0</p>
+<p id="cacciatoriScomparsiCounter">Cacciatori scomparsi: 0</p>
+
 </div>
 </body>
-</html>
+</html></html></html>
