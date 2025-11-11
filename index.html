@@ -15,14 +15,24 @@
         height: 55px;
     }
 
-    div {
+    .divCentrale {
         text-align:center;
-         background-image: url('strada.png');
+        background-image: url('img1/strada.png');
+        background-size: auto;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .divPerTasti {
+        text-align:center;
+    }
+    h1{
+        text-align:center;
+        font-family: Arial, Helvetica, sans-serif;
     }
 </style>
 
 <h1 >Nigga run</h1>
-<div>
+<div class="divCentrale">
 <img id="c0_0" src="img1/0.jpg">
 <img id="c0_1" src="img1/0.jpg">
 <img id="c0_2" src="img1/0.jpg">
@@ -135,13 +145,19 @@
 <br>
 </div>
 
-
+<div class="divPerTasti">
 <input type="button" onClick="disegnaPiano()"       value="disegna piano" ></input>
 <input type="button" onClick="mostraMatriceHTML()"  value="mostra matrice" ></input>
 <input type="button" onClick="disegnaOmino()"       value="mostra omino" ></input>
 
 <p id="posizioneOmino"></p>
 <p id="messaggioDebug"></p>
-
+</div>
 </body>
 </html>
+
+<script>
+
+window.addEventListener('DOMContentLoaded', resizeBackgroundToGrid);
+window.addEventListener('resize', resizeBackgroundToGrid);
+</script>
