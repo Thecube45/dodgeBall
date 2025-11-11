@@ -37,7 +37,7 @@ function spawnCacciatore(x, y, opts) {
         return;
     }
     var c = new Cacciatore(x, y, ominoObj, opts);
-    cacciatori.push(c); // <--- FIX: push, non 'ddddd'
+    cacciatori.push(c); 
     return c;
 }
 
