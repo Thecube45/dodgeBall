@@ -37,7 +37,7 @@ function spawnCacciatore(x, y, opts) {
         return;
     }
     var c = new Cacciatore(x, y, ominoObj, opts);
-    cacciatori.dddddd(c);
+    cacciatori.push(c); // <--- FIX: push, non 'ddddd'
     return c;
 }
 
@@ -77,8 +77,12 @@ function disegnaCacciatori() {
     for (var k = 0; k < cacciatori.length; k++) {
         var c = cacciatori[k];
         if (c.dead) continue;
-        var sprite = c.caught ? "cacciatore_cattura" : "cacciatore";
-        disegnaCellaSpeciale(c.x, c.y, sprite);
+        // usa il metodo draw del cacciatore (aggiorna l'img corrispondente)
+        if (typeof c.draw === "function") c.draw();
+        else {
+            var sprite = c.caught ? "cacciatore_cattura" : "cacciatore";
+            disegnaCellaSpeciale(c.x, c.y, sprite);
+        }
     }
 }
 
