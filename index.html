@@ -9,11 +9,31 @@
 <body onkeydown="checkKeyDown(event);" onkeypress="checkKeyPress(event)" >
 
 <style>
-    img { width: 55px; height: 55px; }
-    div { text-align:center; }
+
+    img {
+        width: 55px;
+        height: 55px;
+    }
+
+    .divCentrale {
+        text-align:center;
+        background-image: url('img1/strada.png');
+        background-size: auto;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .divPerTasti {
+        margin-top:25px;
+        text-align:center;
+    }
+    h1{
+        text-align:center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
 </style>
-<div>
-<h1>Run</h1>
+
+<h1 >Run, buddy run!</h1>
+<div class="divCentrale">
 <img id="c0_0" src="img1/0.jpg">
 <img id="c0_1" src="img1/0.jpg">
 <img id="c0_2" src="img1/0.jpg">
@@ -124,12 +144,11 @@
 <img id="c9_8" src="img1/0.jpg">
 
 <br>
+</div>
 
-
-
+<div class="divPerTasti">
 <input type="button" onClick="disegnaPiano()"       value="disegna piano" ></input>
-<input type="button" onClick="mostraMatriceHTML()"  value="mostra matrice" ></input>
-<input type="button" onClick="disegnaOmino()"       value="mostra omino" ></input>
+<input type="button" onClick="disegnaOmino()"       value="START" ></input>
 
 <p id="posizioneOmino"></p>
 <p id="messaggioDebug"></p>
@@ -141,4 +160,10 @@
 
 </div>
 </body>
-</html></html></html>
+</html>
+
+<script>
+
+window.addEventListener('DOMContentLoaded', resizeBackgroundToGrid);
+window.addEventListener('resize', resizeBackgroundToGrid);
+</script>
