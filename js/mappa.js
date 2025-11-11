@@ -10,13 +10,7 @@ var ominoY = 3;
 
 
 var SFONDO = 0;
-/*
-// Creazione dell'istanza del nemico
-var cacciatore = new Nemico(5, 5, "cacciatore"); // x, y, nome immagine
 
-// Muove il nemico ogni 500 ms (1/2 secondo)
-const intervalloMovimento = setInterval("cacciatore.muovi()" , 500);
-*/
 var omino = "omino";
 
 var pathImg = "img1/";
@@ -43,7 +37,7 @@ function spawnCacciatore(x, y, opts) {
         return;
     }
     var c = new Cacciatore(x, y, ominoObj, opts);
-    cacciatori.push(c);
+    cacciatori.dddddd(c);
     return c;
 }
 
@@ -66,9 +60,9 @@ function aggiornaCacciatori(dt) {
         var c = cacciatori[k];
         c.update(dt);
 
-        // se il cacciatore è "dead" valutiamo la reason prima di rimuoverlo
+        // se il cacciatore è morto valutiamo il motivo
         if (c.dead) {
-            // se è scomparso per "miss" aggiungiamo 100 punti
+            // se l'ha mancato aggiungiamo 100 punti
             if (c.reason === 'miss') {
                 score += 100;
             }
@@ -112,7 +106,7 @@ var j=0;
 var R = 10; 
 var C = 9; 
 
-// definizione id matrice, come array di array
+
 var piano = new Array();
 
 for (var i=0; i<R; i++) {
@@ -131,18 +125,18 @@ function disegnaPiano(){
             disegnaCella(i,j);
         }
     }
-    // disegna i cacciatori PRIMA dell'omino (così l'omino resta visibile sopra)
+    
     disegnaCacciatori();
-    // disegna l'omino in una data posizione
+    
     disegnaCellaSpeciale(ominoX,ominoY,omino); 
 }
 
-// funzione che avvia gli intervalli di update/spawn (evita avvii multipli)
+//  avvia gli intervalli di update/spawn 
 function startGame() {
     if (gameStarted) return;
     gameStarted = true;
 
-    // loop di aggiornamento per i cacciatori e ridisegno
+    // aggiorna i cacciatori nel piano
     updateIntervalId = setInterval(function(){
         aggiornaCacciatori(_updateIntervalMs);
         disegnaPiano();
@@ -154,7 +148,7 @@ function startGame() {
     }, 3000);
 }
 
-// se vuoi fermare il gioco in futuro
+// x fermare il gioco 
 function stopGame() {
     if (!gameStarted) return;
     gameStarted = false;

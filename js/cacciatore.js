@@ -67,8 +67,6 @@ class Cacciatore {
         }
     }
 
-    // semplice render (adaptare al tuo contesto DOM)
-    // sostituisce l'uso di ctx con aggiornamento dell'immagine <img id="cR_C">
     draw() {
         if (this.dead) return;
         var id = "c" + this.x + "_" + this.y; // formato c<riga>_<colonna>
@@ -79,8 +77,6 @@ class Cacciatore {
         el.src = imgFolder + imgName;
     }
 }
-
-// esposizione globale semplice (no module.exports, niente ctx)
 window.Cacciatore = Cacciatore;
 window.getCacciatoriScomparsi = function(){ return cacciatoriScomparsi; };
 window.getCacciati = function(){ return cacciati; };
