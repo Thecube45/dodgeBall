@@ -25,6 +25,12 @@ var cacciatori = [];
 var gameStarted = false;
 var _updateIntervalMs = 100;
 var updateIntervalId = null;
+
+// spawn configurable
+var spawnDelayMs = 3000;          // intervallo corrente (ms)
+var spawnMinMs = 800;             // limite minimo (aumentato da 500 a 800)
+var spawnDecreaseStep = 200;      // di quanto diminuisce ogni step (ridotto da 300 a 200)
+var spawnedCount = 0;             // quanti cacciatori sono stati spawnati in totale
 var spawnIntervalId = null;
 
 // aggiunto punteggio globale
@@ -50,7 +56,33 @@ function spawnCacciatoreRandom() {
     var col = Math.floor(Math.random() * cols);
     var row = 0; // spawn in cima
     // passiamo (riga, colonna)
-    spawnCacciatore(row, col, { chaseInterval: 400, maxMisses: 50 });
+    var c = spawnCacciatore(row, col, { chaseInterval: 400, maxMisses: 50 });
+
+    // contiamo lo spawn e, ogni 10 spawn, aumentiamo lo spawnrate (riduciamo delay)
+    if (c) {
+        spawnedCount += 1;
+        // diminuire meno frequentemente e solo se non ci sono troppi cacciatori attivi
+        if (spawnedCount % 10 === 0 && spawnDelayMs > spawnMinMs && cacciatori.length < 12) {
+            var nuovo = Math.max(spawnMinMs, spawnDelayMs - spawnDecreaseStep);
+            if (nuovo !== spawnDelayMs) {
+                spawnDelayMs = nuovo;
+                // riavvia l'intervallo con il nuovo delay
+                restartSpawnInterval();
+            }
+        }
+        aggiornaSpawnDisplay();
+    }
+}
+
+// (ri)avvia l'intervallo di spawn usando spawnDelayMs
+function restartSpawnInterval() {
+    if (spawnIntervalId) {
+        clearInterval(spawnIntervalId);
+        spawnIntervalId = null;
+    }
+    spawnIntervalId = setInterval(function(){
+        spawnCacciatoreRandom();
+    }, spawnDelayMs);
 }
 
 // aggiorna tutti i cacciatori (dt in ms)
@@ -93,7 +125,7 @@ function disegnaCacciatori() {
 function aggiornaContatoriNellaPagina() {
     if (typeof getCacciati === "function") {
         var el = document.getElementById("cacciatiCounter");
-        if (el) el.innerText = "Cacciati: " + getCacciati();
+        if (el) el.innerText = "(ogni volta che sei colpito)Cacciati: " + getCacciati();
     }
     if (typeof getCacciatoriScomparsi === "function") {
         var el2 = document.getElementById("cacciatoriScomparsiCounter");
@@ -101,7 +133,17 @@ function aggiornaContatoriNellaPagina() {
     }
     // aggiorniamo il punteggio nella pagina
     var scoreEl = document.getElementById("scoreCounter");
-    if (scoreEl) scoreEl.innerText = "Punti: " + score;
+    if (scoreEl) scoreEl.innerText = "(poliziotti schivati +100)Punti: " + score;
+
+    // aggiorna anche la visualizzazione dello spawnrate
+    aggiornaSpawnDisplay();
+}
+
+// mostra il valore corrente dello spawn interval nella pagina
+function aggiornaSpawnDisplay() {
+    var el = document.getElementById("spawnIntervalDisplay");
+    if (!el) return;
+    el.innerText = "Spawn interval: " + spawnDelayMs + " ms (spawned: " + spawnedCount + ")";
 }
 
 // dichiarazione variabili di lavoro
@@ -150,10 +192,8 @@ function startGame() {
         disegnaPiano();
     }, _updateIntervalMs);
 
-    // spawn periodico di cacciatori (uno ogni 3 secondi)
-    spawnIntervalId = setInterval(function(){
-        spawnCacciatoreRandom();
-    }, 3000);
+    // spawn periodico di cacciatori (usa la funzione restart)
+    restartSpawnInterval();
 }
 
 // x fermare il gioco 

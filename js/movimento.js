@@ -1,6 +1,7 @@
 // blocco movimento/animazione dell'omino
 var ominoMoving = false;
-var moveDelayMs = 150; // durata animazione (ms)
+// ridotto da 150 a 40 ms per movimenti più reattivi
+var moveDelayMs = 40; // durata animazione (ms)
 
 //gestione dell'evento onkeydown:
 function checkKeyDown(e) {
