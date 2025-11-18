@@ -30,6 +30,9 @@ var spawnIntervalId = null;
 // aggiunto punteggio globale
 var score = 0;
 
+// stato sprite dell'omino (valori: "omino", "omino_run_left", "omino_run_right")
+var ominoState = "omino";
+
 // genera e aggiunge un cacciatore (richiede che js/cacciatore.js sia caricato)
 function spawnCacciatore(x, y, opts) {
     if (typeof Cacciatore === "undefined") {
@@ -129,10 +132,11 @@ function disegnaPiano(){
             disegnaCella(i,j);
         }
     }
-    
+
     disegnaCacciatori();
-    
-    disegnaCellaSpeciale(ominoX,ominoY,omino); 
+
+    // usa lo stato corrente per scegliere quale sprite dell'omino mostrare
+    disegnaCellaSpeciale(ominoX, ominoY, ominoState);
 }
 
 //  avvia gli intervalli di update/spawn 
@@ -180,16 +184,28 @@ function disegnaCella(i,j){
 
 function disegnaCellaSpeciale(i,j,valore) {
     var id = "c"+i+"_"+j;
-    var ext = (valore === "poliziotto" || valore === "poliziotto_cattura") ? ".png" : ".png";
+    // elenco sprite che usano .png (trasparenza)
+    var pngNames = {
+        "cacciatore": true,
+        "cacciatore_cattura": true,
+        "poliziotto": true,
+        "poliziotto_cattura": true,
+        "omino": true,
+        "omino_run_left": true,
+        "omino_run_right": true
+    };
+    var ext = pngNames[valore] ? ".png" : ".jpg";
     var src = pathImg + valore + ext;
-    console.log(id + " " + src);
+    // console.log(id + " " + src);
     var el = document.getElementById(id);
     if (el) el.src = src;
 } 
 
 function disegnaOmino() {
-    disegnaCellaSpeciale(ominoX,ominoY,omino);
-    document.getElementById("posizioneOmino").innerHTML=" coordinate omino: Omino(" + ominoX + "," + ominoY + ")"; 
+    // disegna secondo lo stato corrente
+    disegnaCellaSpeciale(ominoX,ominoY,ominoState);
+    var posEl = document.getElementById("posizioneOmino");
+    if (posEl) posEl.innerHTML = " coordinate omino: Omino(" + ominoX + "," + ominoY + ")";
     aggiornaContatoriNellaPagina();
 }
 
