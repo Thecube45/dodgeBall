@@ -11,7 +11,7 @@ class Cacciatore {
         this.omino = omino; // oggetto con .x (riga) e .y (colonna)
 
         // intervallo verticale (avanzamento) — più basso = va più veloce in avanti
-        this.chaseInterval = opts.chaseInterval ?? 50; // ms (default più rapido)
+        this.chaseInterval = opts.chaseInterval ?? 10; // ms (default più rapido)
 
         // intervallo orizzontale — muove lateralmente solo ogni horizInterval
         this.horizInterval = opts.horizInterval ?? (this.chaseInterval * 2); // ms
