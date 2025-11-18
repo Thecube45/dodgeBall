@@ -180,7 +180,7 @@ function disegnaCella(i,j){
 
 function disegnaCellaSpeciale(i,j,valore) {
     var id = "c"+i+"_"+j;
-    var ext = (valore === "cacciatore" || valore === "cacciatore_cattura") ? ".png" : ".png";
+    var ext = (valore === "poliziotto" || valore === "poliziotto_cattura") ? ".png" : ".png";
     var src = pathImg + valore + ext;
     console.log(id + " " + src);
     var el = document.getElementById(id);
