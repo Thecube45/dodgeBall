@@ -1,7 +1,5 @@
-// Classe Cacciatore: avanza di 1 in y ogni intervallo,
-// poi cerca di inseguire l'omino muovendosi di 1 a destra o sinistra.
-// per il prof:ctx sta per il contesto di disegno (canvas 2D)
-
+// Classe Cacciatore: avanza di 1 in avanti più velocemente,
+// mentre il movimento orizzontale è ritardato rispetto all'avanzamento.
 
 let cacciatoriScomparsi = 0;
 let cacciati = 0; // contatore per quante volte un cacciatore prende l'omino
@@ -11,9 +9,16 @@ class Cacciatore {
         this.x = x; // riga
         this.y = y; // colonna
         this.omino = omino; // oggetto con .x (riga) e .y (colonna)
-        this.chaseInterval = opts.chaseInterval ?? 500; // ms
+
+        // intervallo verticale (avanzamento) — più basso = va più veloce in avanti
+        this.chaseInterval = opts.chaseInterval ?? 10; // ms (default più rapido)
+
+        // intervallo orizzontale — muove lateralmente solo ogni horizInterval
+        this.horizInterval = opts.horizInterval ?? (this.chaseInterval * 2); // ms
+
         this.maxMisses = opts.maxMisses ?? 60; // passi prima di scomparire
         this.stepTimer = 0;
+        this.horizTimer = 0;
         this.misses = 0;
         this.dead = false;
         this.caught = false;
@@ -25,6 +30,9 @@ class Cacciatore {
         if (this.dead) return;
 
         this.stepTimer += dt;
+        this.horizTimer += dt;
+
+        // Avanza in verticale ogni chaseInterval
         if (this.stepTimer >= this.chaseInterval) {
             this.stepTimer -= this.chaseInterval;
 
@@ -37,23 +45,35 @@ class Cacciatore {
                 return;
             }
 
-            // Poi insegue orizzontalmente di 1 verso l'omino (colonna)
-            if (this.omino.y > this.y) this.y += 1;
-            else if (this.omino.y < this.y) this.y -= 1;
-
-            // Controllo presa (l'omino non viene rimosso)
+            // ogni volta che avanza controlliamo se ha raggiunto l'omino
             if (this.x === this.omino.x && this.y === this.omino.y) {
                 this.caught = true;
-                cacciati += 1; // incrementa il contatore quando prende l'omino
-                // il cacciatore scompare quando prende l'omino
+                cacciati += 1;
                 this.remove('caught');
                 return;
             }
 
-            // Se non ha preso l'omino aumenta i "misses"
+            // conta un passo "miss" se non ha preso l'omino
             this.misses += 1;
             if (this.misses >= this.maxMisses) {
                 this.remove('miss');
+                return;
+            }
+        }
+
+        // Muove orizzontalmente solo quando horizTimer supera horizInterval
+        if (this.horizTimer >= this.horizInterval) {
+            this.horizTimer -= this.horizInterval;
+
+            if (this.omino.y > this.y) this.y += 1;
+            else if (this.omino.y < this.y) this.y -= 1;
+
+            // controllo presa dopo la mossa orizzontale
+            if (this.x === this.omino.x && this.y === this.omino.y) {
+                this.caught = true;
+                cacciati += 1;
+                this.remove('caught');
+                return;
             }
         }
     }
@@ -77,6 +97,7 @@ class Cacciatore {
         el.src = imgFolder + imgName;
     }
 }
+
 window.Cacciatore = Cacciatore;
 window.getCacciatoriScomparsi = function(){ return cacciatoriScomparsi; };
 window.getCacciati = function(){ return cacciati; };
