@@ -73,7 +73,7 @@ class Cacciatore {
         var el = document.getElementById(id);
         if (!el) return;
         var imgFolder = (typeof pathImg !== "undefined") ? pathImg : "img1/";
-        var imgName = this.caught ? "cacciatore_cattura.jpg" : "cacciatore.jpg";
+        var imgName = this.caught ? "cacciatore_cattura.jpg" : "poliziotto.png";
         el.src = imgFolder + imgName;
     }
 }
