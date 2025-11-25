@@ -23,14 +23,14 @@ var cacciatori = [];
 
 // stato del gioco / intervalli
 var gameStarted = false;
-var _updateIntervalMs = 100;
+var _updateIntervalMs = 1; // aggiornamento più veloce per redraw
 var updateIntervalId = null;
 
 // spawn configurable
-var spawnDelayMs = 3000;          // intervallo corrente (ms)
-var spawnMinMs = 800;             // limite minimo (aumentato da 500 a 800)
-var spawnDecreaseStep = 200;      // di quanto diminuisce ogni step (ridotto da 300 a 200)
-var spawnedCount = 0;             // quanti cacciatori sono stati spawnati in totale
+var spawnDelayMs = 2000;
+var spawnMinMs = 400;         // abbasso il minimo per permettere spawn più veloce
+var spawnDecreaseStep = 150;  // step più piccolo
+var spawnedCount = 0;
 var spawnIntervalId = null;
 
 // aggiunto punteggio globale
@@ -56,13 +56,13 @@ function spawnCacciatoreRandom() {
     var col = Math.floor(Math.random() * cols);
     var row = 0; // spawn in cima
     // passiamo (riga, colonna)
-    var c = spawnCacciatore(row, col, { chaseInterval: 400, maxMisses: 50 });
+    var c = spawnCacciatore(row, col, { chaseInterval: 30, horizInterval: 200, maxMisses: 50 });
 
     // contiamo lo spawn e, ogni 10 spawn, aumentiamo lo spawnrate (riduciamo delay)
     if (c) {
         spawnedCount += 1;
         // diminuire meno frequentemente e solo se non ci sono troppi cacciatori attivi
-        if (spawnedCount % 10 === 0 && spawnDelayMs > spawnMinMs && cacciatori.length < 12) {
+        if (spawnedCount % 5 === 0 && spawnDelayMs > spawnMinMs && cacciatori.length < 12) {
             var nuovo = Math.max(spawnMinMs, spawnDelayMs - spawnDecreaseStep);
             if (nuovo !== spawnDelayMs) {
                 spawnDelayMs = nuovo;

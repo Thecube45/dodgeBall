@@ -1,7 +1,9 @@
 // blocco movimento/animazione dell'omino
 var ominoMoving = false;
-// ridotto da 150 a 40 ms per movimenti più reattivi
-var moveDelayMs = 40; // durata animazione (ms)
+// cooldown e durata animazione (più reattivo, ma con animazione visibile)
+var moveDelayMs = 120;       // durata animazione (ms)
+var minMoveIntervalMs = 30;  // cooldown minimo tra due spostamenti
+var lastMoveTime = 0;       
 
 //gestione dell'evento onkeydown:
 function checkKeyDown(e) {
@@ -47,34 +49,34 @@ function sposta (daX,daY, aX,aY){
 // funzione helper che esegue lo spostamento con animazione:
 // dir = "left" | "right"
 function iniziomove(newY, dir) {
-    if (ominoMoving) return; // evita movimenti ripetuti
-    ominoMoving = true;
-    // setta lo stato sprite per il disegno (mappa.js leggerà ominoState)
+    var now = Date.now();
+    if (now - lastMoveTime < minMoveIntervalMs) return;
+    lastMoveTime = now;
+
+    // mostra frame di corsa
     ominoState = (dir === "left") ? "omino_run_left" : "omino_run_right";
-    // esegue lo spostamento logico (riga invariata)
+
+    // esegui lo spostamento subito
     sposta(ominoX, ominoY, ominoX, newY);
 
-    // mantiene l'animazione per moveDelayMs, poi torna allo sprite base
+    // torna a idle dopo breve tempo
     setTimeout(function(){
         ominoState = "omino";
-        ominoMoving = false;
         disegnaPiano();
         disegnaOmino();
     }, moveDelayMs);
 }
 
 function sinistra(){
-    if (ominoMoving) return;
-    if (ominoY>1){
-        var newY = (ominoY-1);
-        iniziomove(newY, "left");
+    // riga invariata, colonna minima = 0
+    if (ominoY > 0) {
+        iniziomove(ominoY - 1, "left");
     }
 }
 
 function destra(){
-    if (ominoMoving) return;
-    if (ominoY<7){
-        var newY = (ominoY + 1);
-        iniziomove(newY, "right");
+    var maxCol = (typeof C === "number") ? C - 1 : 8;
+    if (ominoY < maxCol) {
+        iniziomove(ominoY + 1, "right");
     }
 }

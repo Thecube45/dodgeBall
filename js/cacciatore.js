@@ -6,79 +6,54 @@ let cacciati = 0; // contatore per quante volte un cacciatore prende l'omino
 
 class Cacciatore {
     constructor(x, y, omino, opts = {}) {
-        this.x = x; // riga
-        this.y = y; // colonna
-        this.omino = omino; // oggetto con .x (riga) e .y (colonna)
-
-        // intervallo verticale (avanzamento) — più basso = va più veloce in avanti
-        this.chaseInterval = opts.chaseInterval ?? 10; // ms (default più rapido)
-
-        // intervallo orizzontale — muove lateralmente solo ogni horizInterval
-        this.horizInterval = opts.horizInterval ?? (this.chaseInterval * 2); // ms
-
-        this.maxMisses = opts.maxMisses ?? 60; // passi prima di scomparire
+        this.x = x; this.y = y; this.omino = omino;
+        // verticale più veloce (ma non troppo piccolo)
+        this.chaseInterval = opts.chaseInterval ?? 50; // ms
+        // orizzontale più lento (ritardato)
+        this.horizInterval = opts.horizInterval ?? 50; // ms
+        this.maxMisses = opts.maxMisses ?? 60;
         this.stepTimer = 0;
         this.horizTimer = 0;
         this.misses = 0;
         this.dead = false;
         this.caught = false;
-        this.reason = null; // 'caught' or 'miss'
+        this.reason = null;
     }
 
-    // dt in millisecondi
+    // dt in ms
     update(dt) {
         if (this.dead) return;
 
         this.stepTimer += dt;
-        this.horizTimer += dt;
-
-        // Avanza in verticale ogni chaseInterval
-        if (this.stepTimer >= this.chaseInterval) {
+        // processiamo TUTTI i passi verticali che sono stati accumulati (se dt >> chaseInterval)
+        while (this.stepTimer >= this.chaseInterval) {
             this.stepTimer -= this.chaseInterval;
-
-            // Avanza sempre di uno in verticale (riga)
             this.x += 1;
 
-            // se ha oltrepassato il fondo della mappa, scompare (è un "miss")
-            if (typeof R === "number" && this.x >= R) {
-                this.remove('miss');
-                return;
-            }
+            // fuori mappa => miss
+            if (typeof R === "number" && this.x >= R) { this.remove('miss'); return; }
 
-            // ogni volta che avanza controlliamo se ha raggiunto l'omino
+            // controllo presa
             if (this.x === this.omino.x && this.y === this.omino.y) {
-                this.caught = true;
-                cacciati += 1;
-                this.remove('caught');
-                return;
+                this.caught = true; cacciati += 1; this.remove('caught'); return;
             }
 
-            // conta un passo "miss" se non ha preso l'omino
-            this.misses += 1;
-            if (this.misses >= this.maxMisses) {
-                this.remove('miss');
-                return;
-            }
+            if (++this.misses >= this.maxMisses) { this.remove('miss'); return; }
         }
 
-        // Muove orizzontalmente solo quando horizTimer supera horizInterval
-        if (this.horizTimer >= this.horizInterval) {
+        // movimento orizzontale (più lento): processa passo singolo per ogni horizInterval accumulato
+        this.horizTimer += dt;
+        while (this.horizTimer >= this.horizInterval) {
             this.horizTimer -= this.horizInterval;
-
             if (this.omino.y > this.y) this.y += 1;
             else if (this.omino.y < this.y) this.y -= 1;
 
-            // controllo presa dopo la mossa orizzontale
             if (this.x === this.omino.x && this.y === this.omino.y) {
-                this.caught = true;
-                cacciati += 1;
-                this.remove('caught');
-                return;
+                this.caught = true; cacciati += 1; this.remove('caught'); return;
             }
         }
     }
 
-    // reason: 'caught' | 'miss'
     remove(reason) {
         if (!this.dead) {
             this.dead = true;
@@ -89,12 +64,13 @@ class Cacciatore {
 
     draw() {
         if (this.dead) return;
-        var id = "c" + this.x + "_" + this.y; // formato c<riga>_<colonna>
+        var id = "c" + this.x + "_" + this.y;
         var el = document.getElementById(id);
         if (!el) return;
         var imgFolder = (typeof pathImg !== "undefined") ? pathImg : "img1/";
-        var imgName = this.caught ? "cacciatore_cattura.jpg" : "poliziotto.png";
-        el.src = imgFolder + imgName;
+        var imgName = this.caught ? "poliziotto" : "poliziotto";
+        // usa .png per i cacciatori
+        el.src = imgFolder + imgName + ".png";
     }
 }
 
