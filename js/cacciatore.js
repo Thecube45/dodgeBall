@@ -7,10 +7,13 @@ let cacciati = 0; // contatore per quante volte un cacciatore prende l'omino
 class Cacciatore {
     constructor(x, y, omino, opts = {}) {
         this.x = x; this.y = y; this.omino = omino;
-        // verticale più veloce (ma non troppo piccolo)
-        this.chaseInterval = opts.chaseInterval ?? 50; // ms
-        // orizzontale più lento (ritardato)
-        this.horizInterval = opts.horizInterval ?? 50; // ms
+
+        // vertical speed: più veloce (intervallo più piccolo)
+        this.chaseInterval = opts.chaseInterval ?? 120; // ms (faster forward)
+
+        // horizontal chase: meno aggressivo (intervallo più grande -> meno side steps)
+        this.horizInterval = opts.horizInterval ?? 300; // ms (slower lateral)
+
         this.maxMisses = opts.maxMisses ?? 60;
         this.stepTimer = 0;
         this.horizTimer = 0;
@@ -24,33 +27,23 @@ class Cacciatore {
     update(dt) {
         if (this.dead) return;
 
+        // vertical movement: at most one vertical step per update (predictable)
         this.stepTimer += dt;
-        // processiamo TUTTI i passi verticali che sono stati accumulati (se dt >> chaseInterval)
-        while (this.stepTimer >= this.chaseInterval) {
+        if (this.stepTimer >= this.chaseInterval) {
             this.stepTimer -= this.chaseInterval;
             this.x += 1;
-
-            // fuori mappa => miss
             if (typeof R === "number" && this.x >= R) { this.remove('miss'); return; }
-
-            // controllo presa
-            if (this.x === this.omino.x && this.y === this.omino.y) {
-                this.caught = true; cacciati += 1; this.remove('caught'); return;
-            }
-
+            if (this.x === this.omino.x && this.y === this.omino.y) { this.caught = true; cacciati += 1; this.remove('caught'); return; }
             if (++this.misses >= this.maxMisses) { this.remove('miss'); return; }
         }
 
-        // movimento orizzontale (più lento): processa passo singolo per ogni horizInterval accumulato
+        // horizontal movement: allow a step whenever horizInterval passes (more responsive now)
         this.horizTimer += dt;
-        while (this.horizTimer >= this.horizInterval) {
+        if (this.horizTimer >= this.horizInterval) {
             this.horizTimer -= this.horizInterval;
             if (this.omino.y > this.y) this.y += 1;
             else if (this.omino.y < this.y) this.y -= 1;
-
-            if (this.x === this.omino.x && this.y === this.omino.y) {
-                this.caught = true; cacciati += 1; this.remove('caught'); return;
-            }
+            if (this.x === this.omino.x && this.y === this.omino.y) { this.caught = true; cacciati += 1; this.remove('caught'); return; }
         }
     }
 
@@ -68,8 +61,7 @@ class Cacciatore {
         var el = document.getElementById(id);
         if (!el) return;
         var imgFolder = (typeof pathImg !== "undefined") ? pathImg : "img1/";
-        var imgName = this.caught ? "poliziotto" : "poliziotto";
-        // usa .png per i cacciatori
+        var imgName = this.caught ? "cacciatore_cattura" : "cacciatore";
         el.src = imgFolder + imgName + ".png";
     }
 }
