@@ -29,6 +29,8 @@
     .titolo{
         text-align:center;
         font-family: Arial, Helvetica, sans-serif;
+        margin-top:-6.8%;
+        font-size: 45px;
     }
     .DivDescrizione {
         margin-right: 1500px;
@@ -36,8 +38,18 @@
         font-family: Arial, Helvetica, sans-serif;
         background: #adadb46e;
         border: 2px solid;
-        border-radius: 15px;
+        border-radius: 5px;
         padding-left: 20px;
+    }
+    .barraDellaVita {
+        margin-left: 42%;
+        margin-bottom:0.5%;
+    }
+    .pDellaBarraVita {
+        text-align: center;
+        font-family:  "Inter", "Roboto", "Helvetica Neue", Arial, sans-serif;
+        margin-top: -10px;
+        font-size: 13px;
     }
 </style>
 
@@ -48,6 +60,14 @@
 
 
 <h1 class="titolo" >Run, buddy, run!</h1>
+
+<div class="barraDellaVita" id="barraSfondo2" style="background-color:gray; width:301px">
+	<div id="barraEnergia" style="background-color:rgb(102, 9, 9); width:1px">
+	...
+	</div>
+</div>
+<p class="pDellaBarraVita"> B A R R A    -    V I T A </p>
+
 <div class="divCentrale">
 <img id="c0_0" src="img1/0.jpg">
 <img id="c0_1" src="img1/0.jpg">
