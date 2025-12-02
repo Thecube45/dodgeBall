@@ -216,8 +216,7 @@ function startGame() {
     if (gameStarted) return;
     gameStarted = true;
 
-    // inizializza barra vita
-    aggiornaBarraVita();
+    
 
     // aggiorna i cacciatori nel piano
     updateIntervalId = setInterval(function(){
@@ -230,6 +229,8 @@ function startGame() {
 
     // avvia sottofondo (se presente)
     avviaSottofondo && typeof avviaSottofondo === "function" && avviaSottofondo();
+    // inizializza barra vita
+    aggiornaBarraVita();
 }
 
 
