@@ -43,7 +43,13 @@ class Cacciatore {
             this.horizTimer -= this.horizInterval;
             if (this.omino.y > this.y) this.y += 1;
             else if (this.omino.y < this.y) this.y -= 1;
-            if (this.x === this.omino.x && this.y === this.omino.y) { this.caught = true; cacciati += 1; this.remove('caught'); return; }
+           if (this.x === this.omino.x && this.y === this.omino.y) {
+    this.caught = true;
+    cacciati += 1;
+    subisciColpo();     // <--- TOGLIE UNA VITA
+    this.remove('caught');
+    return;
+}
         }
     }
 
@@ -61,7 +67,7 @@ class Cacciatore {
         var el = document.getElementById(id);
         if (!el) return;
         var imgFolder = (typeof pathImg !== "undefined") ? pathImg : "img1/";
-        var imgName = this.caught ? "cacciatore_cattura" : "cacciatore";
+        var imgName = this.caught ? "cacciatore_cattura" : "poliziotto";
         el.src = imgFolder + imgName + ".png";
     }
 }

@@ -2,7 +2,33 @@
 var ominoX = 9; 
 var ominoY = 3;
 
+var vite = 3;
+var maxVite = 3;
 
+// aggiorna barra grafica
+function aggiornaBarraVita() {
+    var barra = document.getElementById("barraEnergia");
+    if (!barra) return;
+
+    var percentuale = (vite / maxVite) * 300; // 300px larghezza
+    barra.style.width = percentuale + "px";
+
+    if (vite === 3) barra.style.backgroundColor = "rgb(0, 150, 0)";
+    else if (vite === 2) barra.style.backgroundColor = "rgb(200, 150, 0)";
+    else barra.style.backgroundColor = "rgb(180, 0, 0)";
+}
+
+// quando il giocatore viene colpito
+function subisciColpo() {
+    vite -= 1;
+    aggiornaBarraVita();
+    riproduciSuonoColpito();   // AUDIO
+
+    if (vite <= 0) {
+        stopGame();
+        alert("GAME OVER! 😵‍💫");
+    }
+}
 
 
 // costanti e parametri per la configurazioen del gioco
@@ -190,6 +216,8 @@ function startGame() {
 
     // spawn periodico di cacciatori (usa la funzione restart)
     restartSpawnInterval();
+    avviaSottofondo();
+
 }
 
 // x fermare il gioco 
@@ -244,5 +272,18 @@ function disegnaOmino() {
     if (posEl) posEl.innerHTML = " coordinate omino: Omino(" + ominoX + "," + ominoY + ")";
     aggiornaContatoriNellaPagina();
 }
+function avviaSottofondo() {
+    var bg = document.getElementById("audioSottofondo");
+    if (bg) bg.play().catch(()=>{});
+}
+
+function riproduciSuonoColpito() {
+    var snd = document.getElementById("audioColpito");
+    if (snd) {
+        snd.currentTime = 0;
+        snd.play().catch(()=>{});
+    }
+}
+
 
 
