@@ -2,33 +2,41 @@
 var ominoX = 9; 
 var ominoY = 3;
 
+// --- VITA: variabili e funzioni ---
 var vite = 3;
 var maxVite = 3;
 
-// aggiorna barra grafica
+// aggiorna la barra della vita
 function aggiornaBarraVita() {
+    var barraSfondo = document.getElementById("barraSfondo2");
     var barra = document.getElementById("barraEnergia");
-    if (!barra) return;
 
-    var percentuale = (vite / maxVite) * 300; // 300px larghezza
-    barra.style.width = percentuale + "px";
+    if (!barra || !barraSfondo) {
+        console.error("Barra della vita non trovata!");
+        return;
+    }
+
+    var totalWidth = 300;  // larghezza fissa della barra
+    var nuovaLarghezza = Math.max(0, (vite / maxVite) * totalWidth);
+
+    barra.style.width = nuovaLarghezza + "px";
 
     if (vite === 3) barra.style.backgroundColor = "rgb(0, 150, 0)";
     else if (vite === 2) barra.style.backgroundColor = "rgb(200, 150, 0)";
     else barra.style.backgroundColor = "rgb(180, 0, 0)";
 }
 
-// quando il giocatore viene colpito
+// chiamata quando vieni colpito
 function subisciColpo() {
     vite -= 1;
     aggiornaBarraVita();
-    riproduciSuonoColpito();   // AUDIO
 
     if (vite <= 0) {
         stopGame();
-        alert("GAME OVER! 😵‍💫");
+        alert("GAME OVER!");
     }
 }
+
 
 
 // costanti e parametri per la configurazioen del gioco
@@ -208,6 +216,9 @@ function startGame() {
     if (gameStarted) return;
     gameStarted = true;
 
+    // inizializza barra vita
+    aggiornaBarraVita();
+
     // aggiorna i cacciatori nel piano
     updateIntervalId = setInterval(function(){
         aggiornaCacciatori(_updateIntervalMs);
@@ -216,9 +227,11 @@ function startGame() {
 
     // spawn periodico di cacciatori (usa la funzione restart)
     restartSpawnInterval();
-    avviaSottofondo();
 
+    // avvia sottofondo (se presente)
+    avviaSottofondo && typeof avviaSottofondo === "function" && avviaSottofondo();
 }
+
 
 // x fermare il gioco 
 function stopGame() {
