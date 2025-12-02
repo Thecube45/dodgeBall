@@ -53,7 +53,15 @@
         font-size: 13px;
     }
     
-    
+    #barraEnergia {
+    transition: width 250ms ease;
+}
+.barraDellaVita { 
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 </style>
 
 <div class="DivDescrizione">
@@ -63,13 +71,11 @@
 
 
 <h1 class="titolo" >Run, buddy, run!</h1>
-
-
-<div class="barraDellaVita" id="barraSfondo2" style="background-color:gray; width:301px">
-	<div id="barraEnergia" style="background-color:rgb(102, 9, 9); width:1px">
-	...
-	</div>
+<div class="barraDellaVita" id="barraSfondo2" style="background-color:gray; width:300px; height:22px;">
+    <div id="barraEnergia" style="background-color:rgb(102, 9, 9); width:300px; height:100%;"></div>
 </div>
+
+
 <p class="pDellaBarraVita"> B A R R A    -    V I T A </p>
 
 <div class="divCentrale">

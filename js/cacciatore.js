@@ -43,13 +43,19 @@ class Cacciatore {
             this.horizTimer -= this.horizInterval;
             if (this.omino.y > this.y) this.y += 1;
             else if (this.omino.y < this.y) this.y -= 1;
-           if (this.x === this.omino.x && this.y === this.omino.y) {
+if (this.x === this.omino.x && this.y === this.omino.y) {
     this.caught = true;
     cacciati += 1;
-    subisciColpo();     // <--- TOGLIE UNA VITA
+
+    if (typeof subisciColpo === "function") {
+        subisciColpo();
+    }
+
     this.remove('caught');
     return;
 }
+
+
         }
     }
 
